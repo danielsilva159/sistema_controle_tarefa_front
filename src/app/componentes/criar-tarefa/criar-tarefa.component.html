@@ -1,8 +1,7 @@
 <!-- Overlay -->
-<div class="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50">
+<div class="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
   <!-- Modal -->
   <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
-
     <!-- Botão de fechar -->
     <button
       class="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xl font-bold"
@@ -17,7 +16,9 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Título -->
       <div class="mb-4">
-        <label class="block text-sm text-gray-600 mb-1" for="titulo">Título</label>
+        <label class="block text-sm text-gray-600 mb-1" for="titulo"
+          >Título</label
+        >
         <input
           id="titulo"
           formControlName="titulo"
@@ -29,7 +30,9 @@
 
       <!-- Descrição -->
       <div class="mb-4">
-        <label class="block text-sm text-gray-600 mb-1" for="descricao">Descrição</label>
+        <label class="block text-sm text-gray-600 mb-1" for="descricao"
+          >Descrição</label
+        >
         <textarea
           id="descricao"
           formControlName="descricao"
@@ -41,7 +44,9 @@
 
       <!-- Responsável -->
       <div class="mb-4">
-        <label class="block text-sm text-gray-600 mb-1" for="responsavel">Responsável</label>
+        <label class="block text-sm text-gray-600 mb-1" for="responsavel"
+          >Responsável</label
+        >
         <input
           id="responsavel"
           formControlName="responsavel"
@@ -52,7 +57,9 @@
 
       <!-- Data de vencimento -->
       <div class="mb-4">
-        <label class="block text-sm text-gray-600 mb-1" for="vencimento">Data de Vencimento</label>
+        <label class="block text-sm text-gray-600 mb-1" for="vencimento"
+          >Data de Vencimento</label
+        >
         <input
           id="vencimento"
           formControlName="vencimento"
@@ -63,7 +70,9 @@
 
       <!-- Status -->
       <div class="mb-6">
-        <label class="block text-sm text-gray-600 mb-1" for="status">Status</label>
+        <label class="block text-sm text-gray-600 mb-1" for="status"
+          >Status</label
+        >
         <select
           id="status"
           formControlName="status"
@@ -95,4 +104,3 @@
     </form>
   </div>
 </div>
-

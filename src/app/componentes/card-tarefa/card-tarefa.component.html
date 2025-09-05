@@ -1,0 +1,21 @@
+<div
+  class="p-3 rounded-lg shadow border border-gray-200 mb-2 cursor-pointer"
+  [ngClass]="{
+    'bg-gray-50': tarefa?.status === 'A Fazer',
+    'bg-yellow-50': tarefa?.status === 'Em Progresso',
+    'bg-green-50': tarefa?.status === 'Concluído'
+  }"
+>
+  <div class="flex justify-between items-center mb-2">
+    <h3 class="font-semibold text-gray-800">{{ tarefa?.titulo }}</h3>
+    <span class="cursor-pointer" (click)="deletarTarefa(tarefa?.id)">X</span>
+  </div>
+  <p class="text-sm text-gray-500">Responsável: {{ tarefa?.responsavel }}</p>
+</div>
+<app-confirmacao-alert
+  [show]="showConfirm"
+  message="Deseja realmente deletar este item?"
+  (confirm)="confirmarAcao()"
+  (cancel)="cancelarAcao()"
+>
+</app-confirmacao-alert>
