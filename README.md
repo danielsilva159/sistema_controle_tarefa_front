@@ -1,27 +1,92 @@
-# Front
+📌 Sistema de Gestão de Tarefas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.14.
+Um sistema de gerenciamento de tarefas simples e eficiente, desenvolvido com Node.js (backend), PostgreSQL (banco de dados) e Angular 18 (frontend).
 
-## Development server
+O sistema permite:
+✅ Login de usuário
+✅ Visualização de quadro de tarefas (Kanban)
+✅ Cadastro de novas tarefas
+✅ Atualização e gerenciamento de tarefas existentes
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+🚀 Tecnologias Utilizadas
+Backend
 
-## Code scaffolding
+Node.js
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Express.js
 
-## Build
+TypeScript
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+PostgreSQL
 
-## Running unit tests
+[Prisma ou TypeORM] (dependendo do que você usou)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+JWT
+para autenticação
 
-## Running end-to-end tests
+Frontend
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Angular 18
 
-## Further help
+TailwindCSS
+(se estiver usando)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+RxJS
+
+NgRx
+(opcional para estado global)
+
+📂 Estrutura do Projeto
+/project-root
+│── backend/ # Código do backend (Node.js + Express + PostgreSQL)
+│ ├── src/
+│ │ ├── controllers/
+│ │ ├── models/
+│ │ ├── routes/
+│ │ ├── middlewares/
+│ │ └── app.ts
+│ └── package.json
+│
+│── frontend/ # Código do frontend (Angular 18)
+│ ├── src/
+│ │ ├── app/
+│ │ │ ├── auth/ # Login
+│ │ │ ├── board/ # Quadro de tarefas
+│ │ │ ├── tasks/ # Cadastro/edição de tarefas
+│ │ │ └── shared/
+│ └── package.json
+│
+└── README.md
+
+🔑 Funcionalidades
+🔐 Autenticação
+
+Tela de login com JWT
+
+Proteção de rotas no backend e frontend
+
+📋 Quadro de Tarefas
+
+Visualização das tarefas em um quadro estilo Kanban
+
+Status: A Fazer | Em Progresso | Concluído
+
+📝 Gestão de Tarefas
+
+Criar nova tarefa
+
+Editar tarefa existente
+
+Alterar status da tarefa
+
+Excluir tarefa
+
+📌 Próximos Passos (Melhorias Futuras)
+
+🔍 Busca e filtros de tarefas
+
+📅 Integração com calendário
+
+👥 Suporte a múltiplos usuários no mesmo quadro
+
+📱 Versão mobile responsiva
