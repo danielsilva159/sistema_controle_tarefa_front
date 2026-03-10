@@ -13,6 +13,11 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { firstValueFrom } from 'rxjs';
+import { AlertService } from '../../services/alert/alert.service';
+import { TypeMessageAlert } from '../../enuns/type-message-alert';
+import { UsuarioService } from '../../services/usuario/usuario.service';
+import IUsuario from '../../interfaces/usuario.interface';
+import { TemplateComponent } from '../../componentes/template/template.component';
 @Component({
   selector: 'app-quadro',
   standalone: true,
@@ -23,6 +28,7 @@ import { firstValueFrom } from 'rxjs';
     CardTarefaComponent,
     CdkDropList,
     CdkDrag,
+    TemplateComponent,
   ],
   templateUrl: './quadro.component.html',
   styleUrl: './quadro.component.scss',
@@ -34,11 +40,17 @@ export class QuadroComponent implements OnInit {
   fazer: ITarefa[] = [];
   progresso: ITarefa[] = [];
   concluida: ITarefa[] = [];
+  usuarioLogado: IUsuario | null = null;
 
-  constructor(private tarefaService: TarefaService) {}
+  constructor(
+    private tarefaService: TarefaService,
+    private alertService: AlertService,
+    private usuarioService: UsuarioService,
+  ) {}
 
   ngOnInit(): void {
     this.listarTarefas();
+    this.usuarioLogado = this.usuarioService.getUsuario();
   }
 
   abrirTarefa(tarefa: ITarefa) {
@@ -66,8 +78,6 @@ export class QuadroComponent implements OnInit {
   }
 
   listarTarefas() {
-    console.log('entrou no listar');
-
     this.tarefaService.listar().subscribe((tarefas) => {
       this.fazer = tarefas.fazer;
       this.progresso = tarefas.progresso;
@@ -80,24 +90,38 @@ export class QuadroComponent implements OnInit {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex
+        event.currentIndex,
       );
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex
+        event.currentIndex,
       );
       const tarefa = firstValueFrom(
         this.tarefaService.atualizar(
           event.container.data[event.currentIndex],
-          coluna
-        )
+          coluna,
+        ),
       );
       tarefa.then(() => {
+        this.alertService.alert(TypeMessageAlert.Success, this.message(coluna));
         this.listarTarefas();
       });
+    }
+  }
+
+  message(coluna: number): string {
+    switch (coluna) {
+      case 1:
+        return 'Tarefa movida para Fazer!';
+      case 2:
+        return 'Tarefa movida para Em Progresso!';
+      case 3:
+        return 'Tarefa movida para Concluída!';
+      default:
+        return '';
     }
   }
 }

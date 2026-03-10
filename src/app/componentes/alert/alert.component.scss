@@ -1,0 +1,26 @@
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  min-width: 250px;
+}
+
+.success {
+  background: #2e7d32;
+}
+
+.error {
+  background: #c62828;
+}
+
+.warning {
+  background: #ed6c02;
+}
+
+.info {
+  background: #0288d1;
+}

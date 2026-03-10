@@ -1,4 +1,4 @@
-import { firstValueFrom } from 'rxjs';
+import { DatePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -13,15 +13,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TarefaService } from '../../services/tarefa/tarefa.service';
+import { firstValueFrom } from 'rxjs';
 import { ITarefa } from '../../interfaces/tarefa.interface';
-import { DatePipe } from '@angular/common';
-import { ConfirmacaoAlertComponent } from '../confirmacao-alert/confirmacao-alert.component';
+import { AlertService } from '../../services/alert/alert.service';
+import { TarefaService } from '../../services/tarefa/tarefa.service';
+import { TypeMessageAlert } from '../../enuns/type-message-alert';
+import { TypeStatusColumn } from '../../enuns/type-status-column';
 
 @Component({
   selector: 'app-criar-tarefa',
   standalone: true,
-  imports: [ReactiveFormsModule, ConfirmacaoAlertComponent],
+  imports: [ReactiveFormsModule],
   providers: [DatePipe],
   templateUrl: './criar-tarefa.component.html',
   styleUrl: './criar-tarefa.component.scss',
@@ -32,11 +34,13 @@ export class CriarTarefaComponent implements OnChanges {
   @Input() tarefa: ITarefa | null = null;
 
   form: FormGroup;
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private tarefaService: TarefaService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private alertService: AlertService,
   ) {
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
@@ -49,15 +53,14 @@ export class CriarTarefaComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tarefa'] && this.tarefa) {
-      console.log(this.tarefa.vencimento);
-
+      this.isEditMode = true;
       this.form.patchValue({
         titulo: this.tarefa.titulo,
         descricao: this.tarefa.descricao,
         responsavel: this.tarefa.responsavel,
         vencimento: this.datePipe.transform(
           this.tarefa.vencimento,
-          'yyyy-MM-dd'
+          'yyyy-MM-dd',
         ),
         status: this.tarefa.status,
       });
@@ -79,8 +82,16 @@ export class CriarTarefaComponent implements OnChanges {
         };
         const coluna = this.transformandoStatusemColuna(this.form.value.status);
         firstValueFrom(this.tarefaService.atualizar(tarefa, coluna));
+        this.alertService.alert(
+          TypeMessageAlert.Success,
+          'Tarefa atualizada com sucesso!',
+        );
       } else {
         firstValueFrom(this.tarefaService.salvar(this.form.value));
+        this.alertService.alert(
+          TypeMessageAlert.Success,
+          'Tarefa criada com sucesso!',
+        );
       }
       this.salvar.emit(this.form.value);
       this.fechar.emit();
@@ -90,11 +101,11 @@ export class CriarTarefaComponent implements OnChanges {
 
   transformandoStatusemColuna(status: string): number {
     switch (status) {
-      case 'A Fazer':
+      case TypeStatusColumn.AFazer:
         return 1;
-      case 'Em Progresso':
+      case TypeStatusColumn.EmProgresso:
         return 2;
-      case 'Concluída':
+      case TypeStatusColumn.Concluida:
         return 3;
       default:
         return 1;

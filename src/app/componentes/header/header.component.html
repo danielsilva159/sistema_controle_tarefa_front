@@ -1,0 +1,9 @@
+<header class="header">
+  <div class="logo">Sistema de Controle de Tarefas</div>
+  <div class="usuario-info">
+    <span *ngIf="usuario">Bem-vindo, {{ usuario.nome }}!</span>
+  </div>
+  <div class="logout cursor-pointer">
+    <span (click)="logout()">Logout</span>
+  </div>
+</header>

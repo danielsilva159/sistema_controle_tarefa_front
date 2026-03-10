@@ -5,7 +5,7 @@ import { UsuarioService } from '../services/usuario/usuario.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');
-  const user = localStorage.getItem('usuario');
+
   const loginService = inject(UsuarioService);
   if (!req.url.includes('login') || !req.url.includes('register')) {
     if (token) {
@@ -22,9 +22,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           }
           loginService.logout();
           return throwError(() => error);
-        })
+        }),
       );
     }
   }
+
   return next(req);
 };

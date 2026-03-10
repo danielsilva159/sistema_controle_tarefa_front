@@ -4,15 +4,17 @@ import IUser from '../../interfaces/usuario.interface';
 import { environment } from '../../../environments/environment';
 import IUsuario from '../../interfaces/usuario.interface';
 import ILogin from '../../interfaces/login.interface';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  public usuarioLogado: IUsuario | null = null;
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   register(user: IUsuario) {
     return this.http.post(`${environment.apiUrl}/auth/register`, user);
@@ -28,5 +30,10 @@ export class UsuarioService {
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  getUsuario(): IUsuario | null {
+    const user = localStorage.getItem('usuario');
+    return user ? JSON.parse(user) : null;
   }
 }
